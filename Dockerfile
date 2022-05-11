@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN apt-get update
-RUN apt-get install software-properties-common
+RUN apt-get install software-properties-common || exit 0
 RUN apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
 RUN apt-get update
 RUN apt-get install openjdk-8-jdk
