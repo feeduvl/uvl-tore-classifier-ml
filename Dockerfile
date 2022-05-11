@@ -4,6 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN apt-get update && apt-get install -y wget
+RUN apt-get update && apt-get install -y gnupg
 RUN wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add -
 RUN add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/
 RUN apt-get update && apt-get install -y adoptopenjdk-8-hotspot
