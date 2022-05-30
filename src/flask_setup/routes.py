@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, json
 from nltk.tag import StanfordNERTagger
 from nltk.tokenize import word_tokenize
 
@@ -10,8 +10,18 @@ from src.flask_setup import app
 
 
 
-@app.route('/hitec/tore/classify_ml', methods=['POST'])
+@app.route('"/hitec/classify/concepts/stanford_ner/run"', methods=['POST'])
 def classify_tore():
+
+    app.logger.info('Stanford NER Classification run requested')
+
+    content = json.loads(request.data.decode('utf-8'))
+    app.logger.info(content)
+
+    dataset = content["dataset"]["documents"]
+
+    app.logger.info(dataset)
+
 
     st = StanfordNERTagger('ner/classifiers/english.all.3class.distsim.crf.ser.gz',
                         'ner/stanford-ner.jar',
@@ -27,12 +37,3 @@ def classify_tore():
 
     return 'OK'
 
-# dummy method
-@app.route('/post', methods=['POST'])
-def post_route():
-    if request.method == 'POST':
-
-        data = request.get_json()
-
-        print('Data Received: "{data}"'.format(data=data))
-        return "Request Processed.\n"
