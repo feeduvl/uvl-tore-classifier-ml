@@ -1,4 +1,4 @@
-from flask import Flask, request, json
+from flask import Flask, request, json, jsonify
 from nltk.tag import StanfordNERTagger
 from nltk.tokenize import word_tokenize
 
