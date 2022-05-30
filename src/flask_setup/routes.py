@@ -10,7 +10,7 @@ from src.flask_setup import app
 
 
 
-@app.route('"/hitec/classify/concepts/stanford_ner/run"', methods=['POST'])
+@app.route('"/hitec/classify/concepts/stanford-ner/run"', methods=['POST'])
 def classify_tore():
 
     app.logger.info('Stanford NER Classification run requested')
