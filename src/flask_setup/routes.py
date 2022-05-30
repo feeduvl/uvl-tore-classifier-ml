@@ -37,3 +37,11 @@ def classify_tore():
 
     return 'OK'
 
+@app.route("/hitec/classify/concepts/stanford-ner/status", methods=["GET"])
+def get_status():
+    status = {
+        "status": "operational",
+    }
+
+    return jsonify(status)
+
