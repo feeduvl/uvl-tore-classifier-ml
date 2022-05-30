@@ -10,7 +10,7 @@ from src.flask_setup import app
 
 
 
-@app.route('"/hitec/classify/concepts/stanford-ner/run"', methods=['POST'])
+@app.route('/hitec/classify/concepts/stanford-ner/run', methods=['POST'])
 def classify_tore():
 
     app.logger.info('Stanford NER Classification run requested')
@@ -37,7 +37,7 @@ def classify_tore():
 
     return 'OK'
 
-@app.route("/hitec/classify/concepts/stanford-ner/status", methods=["GET"])
+@app.route('/hitec/classify/concepts/stanford-ner/status', methods=["GET"])
 def get_status():
     status = {
         "status": "operational",
