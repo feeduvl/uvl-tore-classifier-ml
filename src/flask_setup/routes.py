@@ -25,10 +25,9 @@ def classify_tore():
     app.logger.info(content)
 
     documents = content["dataset"]["documents"]
-    dataset_name = content["dataset"]["names"]
-    #annotation_name = content["params"]["annotation_name"] # this is missing in the frontend atm
-    annotation_name = dataset_name + '_jw' # tmp
-
+    dataset_name = content["dataset"]["name"]
+    annotation_name = content["params"]["annotation_name"]
+    
     for document in documents:
         app.logger.info(f'Start classification of dataset {document["id"]}') 
         annotated_docs = classifier.classify(document["text"])
