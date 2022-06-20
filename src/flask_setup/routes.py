@@ -2,7 +2,7 @@ from flask import request, json, jsonify
 
 from src.flask_setup import app
 from src.classifier import classifier
-from src.utility import AnnotationHandler
+from src.utility.annotation_handler import AnnotationHandler
 
 """
 Concept:
