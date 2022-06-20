@@ -24,17 +24,22 @@ def classify_tore():
     content = json.loads(request.data.decode('utf-8'))
     app.logger.info(content)
 
-    dataset = content["dataset"]["documents"]
-    dataset_name = '' # ???? JSON not available atm
-    annotation_name = '' # ????
+    documents = content["dataset"]["documents"]
+    dataset_name = content["dataset"]["names"]
+    #annotation_name = content["params"]["annotation_name"] # this is missing in the frontend atm
+    annotation_name = dataset_name + '_jw' # tmp
 
-    app.logger.info(f'Start classification of dataset {dataset_name}') 
-
-    annotated_docs = classifier.classify(dataset)
+    for document in documents:
+        app.logger.info(f'Start classification of dataset {document["id"]}') 
+        annotated_docs = classifier.classify(document["text"])
     
     app.logger.info(annotated_docs) # remove later
 
+
     app.logger.info(f'Initialize annotation {annotation_name} of dataset {dataset_name}') 
+
+    return 'OK' # debugging
+
 
     annotation_handler = AnnotationHandler(annotation_name, dataset_name)
     annotation_handler.initialize()
