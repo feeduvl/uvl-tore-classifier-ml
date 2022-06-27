@@ -50,7 +50,7 @@ class AnnotationHandler:
         Returns:
             Status code of the request to Feed.UVL
         """
-        request = requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/store/annotation/', json=self.annotation_data)
+        request = requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/store/annotation/', json=self.data)
 
         return request.status_code
 
@@ -89,4 +89,3 @@ class AnnotationHandler:
                 continue
 
         pass
-    
