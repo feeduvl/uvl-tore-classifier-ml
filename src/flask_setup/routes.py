@@ -28,17 +28,19 @@ def classify_tore():
     dataset_name = content["dataset"]["name"]
     annotation_name = content["params"]["annotation_name"]
     
+    app.logger.info(f'Start classification of dataset {dataset_name}')
+
+    annotated_docs = []
     for document in documents:
-        app.logger.info(f'Start classification of dataset {document["id"]}') 
-        annotated_docs = classifier.classify(document["text"])
+        annotated_docs += classifier.classify(document["text"])
     
+    app.logger.info(f'Finished classification')
     app.logger.info(annotated_docs) # remove later
 
 
     app.logger.info(f'Initialize annotation {annotation_name} of dataset {dataset_name}') 
 
     return 'OK' # debugging
-
 
     annotation_handler = AnnotationHandler(annotation_name, dataset_name)
     annotation_handler.initialize()

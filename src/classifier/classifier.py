@@ -7,6 +7,7 @@ def classify(dataset):
                         encoding='utf-8')
 
     tokenized_text = word_tokenize(dataset)
+    print(tokenized_text)
     classified_text = st.tag(tokenized_text)
 
     return classified_text

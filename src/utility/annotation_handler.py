@@ -61,6 +61,32 @@ class AnnotationHandler:
         Arguments:
             annotated_docs: Full text with labels
         """
-        # todo
+        
+        code_index = 0
+
+        for index, annotation in enumerate(annotated_docs):
+            # loop at tokens 
+            if annotation[1] != 'O':
+                # set num_name_codes and num_tore_codes
+                self.data["tokens"][index]["num_name_codes"] = 1
+                self.data["tokens"][index]["num_tore_codes"] = 1
+                
+                # create code and append to list of codes
+                code = {
+                    "tokens": [
+                        index
+                    ],
+                    "name": annotation[0],
+                    "tore": annotation[1],
+                    "index": code_index,
+                    "relationship_memberships": []
+                }
+
+                self.data["codes"].append(code)
+
+                code_index += 1
+            else:
+                continue
 
         pass
+    
