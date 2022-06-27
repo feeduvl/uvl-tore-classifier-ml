@@ -22,7 +22,6 @@ def classify_tore():
     app.logger.info('Stanford NER Classification run requested')
 
     content = json.loads(request.data.decode('utf-8'))
-    app.logger.info(content)
 
     documents = content["dataset"]["documents"]
     dataset_name = content["dataset"]["name"]
@@ -39,8 +38,6 @@ def classify_tore():
 
 
     app.logger.info(f'Initialize annotation {annotation_name} of dataset {dataset_name}') 
-
-    return 'OK' # debugging
 
     annotation_handler = AnnotationHandler(annotation_name, dataset_name)
     annotation_handler.initialize()
