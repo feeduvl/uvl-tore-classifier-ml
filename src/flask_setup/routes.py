@@ -1,8 +1,8 @@
 from flask import request, json, jsonify
 
 from src.flask_setup import app
-from src.classifier import classifier
 from src.utility.annotation_handler import AnnotationHandler
+from src.flask_setup.request_handler import RequestHandler
 
 """
 Concept:
@@ -26,26 +26,11 @@ def classify_tore():
     documents = content["dataset"]["documents"]
     dataset_name = content["dataset"]["name"]
     annotation_name = content["params"]["annotation_name"]
-    
-    app.logger.info(f'Start classification of dataset {dataset_name}')
+    create = content["params"]["create"]
 
-    annotated_docs = []
-    for document in documents:
-        annotated_docs += classifier.classify(document["text"])
-    
-    app.logger.info(f'Finished classification')
-    app.logger.info(annotated_docs) # remove later
-
-
-    app.logger.info(f'Initialize annotation {annotation_name} of dataset {dataset_name}') 
-
-    annotation_handler = AnnotationHandler(annotation_name, dataset_name)
-    annotation_handler.initialize()
-    annotation_handler.get()
-    annotation_handler.add_tokens(annotated_docs)
-    
-    app.logger.info(f'Writing {annotation_name} to DB') 
-    annotation_handler.store()
+    annotation_handler = AnnotationHandler(annotation_name, dataset_name, app.logger)
+    request_handler = RequestHandler(app.logger, annotation_handler)
+    result = request_handler.process(documents, create)
 
     return 'OK'
 

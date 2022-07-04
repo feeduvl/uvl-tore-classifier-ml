@@ -2,10 +2,11 @@ import requests
 
 class AnnotationHandler:
 
-    def __init__(self, annotation_name, dataset_name) -> None:
+    def __init__(self, annotation_name, dataset_name, logger) -> None:
         self.annotation_name = annotation_name
         self.dataset_name = dataset_name
         self.data = None
+        self.logger = logger
         pass
 
     def initialize(self):
@@ -18,6 +19,9 @@ class AnnotationHandler:
         Returns:
             Status code of the request to Feed.UVL
         """
+        self.logger.info(f'Initialize annotation {self.annotation_name} of dataset {self.dataset_name}') 
+
+
         annotation = {
             'name': self.annotation_name, 
             'dataset': self.dataset_name
@@ -50,6 +54,8 @@ class AnnotationHandler:
         Returns:
             Status code of the request to Feed.UVL
         """
+        self.logger.info(f'Writing {self.annotation_name} to DB') 
+
         request = requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/store/annotation/', json=self.data)
 
         return request.status_code
