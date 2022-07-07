@@ -8,7 +8,7 @@ class RequestHandler:
         self.annotation_handler = annotation_handler
 
     def process(self, documents, create = False):
-        self.logger.info(f'Start classification of dataset {dataset_name}')
+        self.logger.info(f'Start classification of dataset')
 
         annotated_docs = []
         classifier = Classifier()
@@ -18,13 +18,14 @@ class RequestHandler:
         self.logger.info(f'Finished classification')
         self.logger.info(annotated_docs) # remove later
 
+        self.annotation_handler.initialize()
+        self.annotation_handler.get()
+        self.annotation_handler.add_tokens(annotated_docs)
+
         if create:
-            self.annotation_handler.initialize()
-            self.annotation_handler.get()
-            self.annotation_handler.add_tokens(annotated_docs)
             self.annotation_handler.store()
         
-        return annotated_docs
+        return self.annotation_handler.get_data()
 
 
     

@@ -95,3 +95,9 @@ class AnnotationHandler:
                 continue
 
         pass
+
+    def get_data(self):
+        """
+        Returns the JSON of the annoation
+        """
+        return self.data

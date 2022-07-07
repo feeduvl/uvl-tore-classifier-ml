@@ -26,15 +26,17 @@ def classify_tore():
     documents = content["dataset"]["documents"]
     dataset_name = content["dataset"]["name"]
     annotation_name = content["params"]["annotation_name"]
-    create = content["params"]["persist"]
+    create = content["params"]["persist"] == 'true'
 
     app.logger.info(f'Create settings: {create}, {type(create)}')
 
     annotation_handler = AnnotationHandler(annotation_name, dataset_name, app.logger)
     request_handler = RequestHandler(app.logger, annotation_handler)
-    result = request_handler.process(documents, create)
+    annotation_data = request_handler.process(documents, create)
 
-    return 'OK'
+    result = dict()
+    result.update({"annotation": annotation_data})
+    return jsonify(result)
 
 @app.route('/hitec/classify/concepts/stanford-ner/status', methods=["GET"])
 def get_status():
