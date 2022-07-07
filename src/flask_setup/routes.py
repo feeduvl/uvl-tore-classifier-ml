@@ -26,7 +26,9 @@ def classify_tore():
     documents = content["dataset"]["documents"]
     dataset_name = content["dataset"]["name"]
     annotation_name = content["params"]["annotation_name"]
-    create = content["params"]["create"]
+    create = content["params"]["persist"]
+
+    app.logger.info(f'Create settings: {create}, {type(create)}')
 
     annotation_handler = AnnotationHandler(annotation_name, dataset_name, app.logger)
     request_handler = RequestHandler(app.logger, annotation_handler)
