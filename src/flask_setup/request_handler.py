@@ -4,7 +4,6 @@ from src.classifier.classifier import Classifier
 class RequestHandler:
     
     def __init__(self, logger, annotation_handler) -> None:
-        self.documents = []
         self.logger = logger
         self.annotation_handler = annotation_handler
 
