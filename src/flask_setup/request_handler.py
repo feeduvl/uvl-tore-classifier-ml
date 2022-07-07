@@ -18,14 +18,15 @@ class RequestHandler:
         self.logger.info(f'Finished classification')
         self.logger.info(annotated_docs) # remove later
 
-        self.annotation_handler.initialize()
-        self.annotation_handler.get()
-        self.annotation_handler.add_tokens(annotated_docs)
-
         if create:
+            self.annotation_handler.initialize()
+            self.annotation_handler.get()
+            self.annotation_handler.add_tokens(annotated_docs)
             self.annotation_handler.store()
+        else:
+            self.annotation_handler.generate_codes(annotated_docs)
         
-        return self.annotation_handler.get_data()
+        return self.annotation_handler.get_codes()
 
 
     

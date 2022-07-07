@@ -7,6 +7,7 @@ class AnnotationHandler:
         self.dataset_name = dataset_name
         self.data = None
         self.logger = logger
+        self.codes = []
         pass
 
     def initialize(self):
@@ -67,7 +68,6 @@ class AnnotationHandler:
         Arguments:
             annotated_docs: Full text with labels
         """
-        
         code_index = 0
 
         for index, annotation in enumerate(annotated_docs):
@@ -88,16 +88,43 @@ class AnnotationHandler:
                     "relationship_memberships": []
                 }
 
-                self.data["codes"].append(code)
-
+                self.codes.append(code)
                 code_index += 1
-            else:
-                continue
+
+        self.data["codes"] = self.codes
+        pass
+
+    def generate_codes(self, annotated_docs):
+        """
+        Generates the code structure of an annotation
+
+        Arguments:
+            annotated_docs: Full text with labels
+        """
+        code_index = 0
+
+        for index, annotation in enumerate(annotated_docs):
+            # loop at tokens 
+            if annotation[1] != 'O':
+                # create code and append to list of codes
+                code = {
+                    "tokens": [
+                        index
+                    ],
+                    "name": annotation[0],
+                    "tore": annotation[1],
+                    "index": code_index,
+                    "relationship_memberships": []
+                }
+
+                self.codes.append(code)
+                code_index += 1
 
         pass
 
-    def get_data(self):
+
+    def get_codes(self):
         """
         Returns the JSON of the annoation
         """
-        return self.data
+        return self.codes

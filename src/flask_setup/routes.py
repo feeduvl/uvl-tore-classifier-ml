@@ -17,8 +17,8 @@ Concept:
 """
 
 @app.route('/hitec/classify/concepts/stanford-ner/run', methods=['POST'])
-def classify_tore():
 
+def classify_tore():
     app.logger.info('Stanford NER Classification run requested')
 
     content = json.loads(request.data.decode('utf-8'))
@@ -32,10 +32,10 @@ def classify_tore():
 
     annotation_handler = AnnotationHandler(annotation_name, dataset_name, app.logger)
     request_handler = RequestHandler(app.logger, annotation_handler)
-    annotation_data = request_handler.process(documents, create)
+    codes = request_handler.process(documents, create)
 
     result = dict()
-    result.update({"annotation": annotation_data})
+    result.update({"codes": codes})
     return jsonify(result)
 
 @app.route('/hitec/classify/concepts/stanford-ner/status', methods=["GET"])
