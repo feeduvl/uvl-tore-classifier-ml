@@ -2,12 +2,17 @@ import requests
 
 class AnnotationHandler:
 
-    def __init__(self, annotation_name, dataset_name, logger) -> None:
+    def __init__(self, annotation_name, dataset_name, logger, request_handler=None) -> None:
         self.annotation_name = annotation_name
         self.dataset_name = dataset_name
         self.data = None
         self.logger = logger
         self.codes = []
+
+        if request_handler != None:
+            self.requests = request_handler
+        else:
+            self.requests = requests
         pass
 
     def initialize(self):
@@ -27,7 +32,7 @@ class AnnotationHandler:
             'name': self.annotation_name, 
             'dataset': self.dataset_name
         }
-        request = requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/orchestration/concepts/annotationinit/', json=annotation)
+        request = self.requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/orchestration/concepts/annotationinit/', json=annotation)
 
         return request.status_code
 
@@ -41,7 +46,7 @@ class AnnotationHandler:
         Returns:
             JSON that describes the annotation
         """
-        request = requests.get(f'https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/annotation/name/{self.annotation_name}')
+        request = self.requests.get(f'https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/annotation/name/{self.annotation_name}')
         self.data = request.json()
         pass
 
@@ -57,7 +62,7 @@ class AnnotationHandler:
         """
         self.logger.info(f'Writing {self.annotation_name} to DB') 
 
-        request = requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/store/annotation/', json=self.data)
+        request = self.requests.post('https://feed-uvl.ifi.uni-heidelberg.de/hitec/repository/concepts/store/annotation/', json=self.data)
 
         return request.status_code
 

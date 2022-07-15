@@ -3,7 +3,7 @@ from nltk.tokenize import word_tokenize
 
 class Classifier:
     def annotate(self, dataset):
-        st = StanfordNERTagger('ner/classifiers/tore-model.ser.gz',
+        st = StanfordNERTagger('ner/classifiers/tore-model-og.ser.gz',
                             'ner/stanford-ner.jar',
                             encoding='utf-8')
 
